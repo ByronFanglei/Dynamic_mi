@@ -1,5 +1,6 @@
 <?php
 	//code 0:注册成功 1：注册失败
+	//coodCookie---0:cookie添加成功   1：cookie添加失败
 	require_once 'singPDO.php';
 	$pdo = SingPDO::getPDO();
 
@@ -17,19 +18,21 @@
 	for ($i=0;$pdoLogin->fetch(PDO::FETCH_COLUMN);$i++) { 
 		$loginInfo[$i]=array('secre'=>$secreP,'name'=>$nameP);
 	}
-	// 开始判断数据
+	// 开始判断数据 secre相同就不行
 	$ls = true;
 	for($j=0;$j<count($loginInfo);$j++){
 		if ($loginInfo[$j]['secre']==$getsecre) {
-			if ($loginInfo[$j]['name']==$getname) {
+			// if ($loginInfo[$j]['name']==$getname) {
 				$ls = false;
 				$success['code']=1;
+				$success['coodCookie']=1;
 				break;
-			}
+			// }
 		}
 	}
 
 	if ($ls) {
+		$success['coodCookie']=0;
 		$success['code']=0;
 		// 开始将注册信息插入数据库
 		$getSql = "insert into mi_index_login(code,name) values (?,?)";
@@ -37,6 +40,8 @@
 		$getData->bindValue(1,$getsecre);
 		$getData->bindValue(2,$getname);
 		$getData->execute();
+		// 设置前端cookie
+		setcookie('code',$getname,time()+60*60*24,'/');
 	}
 
 

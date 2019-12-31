@@ -397,6 +397,27 @@ $(function(){
 	// 登录部分
 	;(function(){
 		var zt = 0;
+		// 判断cookie信息且自动登录函数
+		function getCookie(){
+			var cookie = document.cookie;
+			cookieArr = cookie.split(';');
+			var cookieObj = {};
+			for(var i=0;i<cookieArr.length;i++){
+				var cookieStr = cookieArr[i].trim().split('=')
+				cookieObj[cookieStr[0]]=cookieStr[1];
+			}
+			return cookieObj;
+		}
+		var cookie = getCookie();
+		
+		if (cookie.code != undefined) {
+			if (cookie.code.length != 0) {
+				$('#loginBtn').html(decodeURI(cookie.code));
+				$('#exitBut').html('退出').css('display','block');
+				zt=1;
+			}
+		}
+
 		// 登录模块
 		$('#loginBtn').click(function(){
 		var secret = prompt('暗号-.-(Evil)');
@@ -413,13 +434,13 @@ $(function(){
 				secretH:secret,
 				},
 			success:function(res){
-			// console.log(res);
-					if (res.code==0) {
+					// console.log(res);
+					if (res.code==0 && res.codeCookie==0) {
 						alert("验证成功");
 						$('#loginBtn').html(res.name);
 						$('#exitBut').html('退出').css('display','block');
 						zt=1;
-					}else if (res.code==1) {
+					}else if (res.code==1 && res.codeCookie==1) {
 						alert("验证失败！找找别的大佬要个CODE");
 					}
 				}
@@ -443,6 +464,7 @@ $(function(){
 									getnameH:getname
 								},
 								success:function(res){
+									console.log(res);
 									if (res.code==0) {
 										// console.log(res);
 										zt=1;//注册成功自动登录
@@ -450,7 +472,7 @@ $(function(){
 										$('#loginBtn').html(res.info['name']);
 										$('#exitBut').html('退出');
 									}else if (res.code==1) {
-										alert('请从新发出秘钥');
+										alert('秘钥已经被人注册过了，请从新发出秘钥');
 									}
 								}
 							});
@@ -464,6 +486,9 @@ $(function(){
 				}else if(zt==1){
 					$('#loginBtn').html('登录');
 					$('#exitBut').html('注册');
+					// 删除cookie
+					var expires = new Date(new Date().getTime()+1).toGMTString();
+					document.cookie='code='+cookie.code+';expires='+expires+'Domain=domain;path=/';
 					zt=0;
 				}
 				

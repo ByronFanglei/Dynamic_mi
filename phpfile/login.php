@@ -1,5 +1,6 @@
 <?php
-	//0:秘钥成功  1:秘钥失败
+	//code---0:秘钥成功  1:秘钥失败  
+	//coodCookie---0:cookie添加成功   1：cookie添加失败
 	// 接收前端秘钥数据
 	require_once 'singPDO.php';
 	$pdo = SingPDO::getPDO();
@@ -24,13 +25,21 @@
 			// 判断成功
 			$success['code']=0;
 			$success['name']=$secret[$j]['name'];
+			$success['codeCookie']=0;
 			$ls=true;
+			// 后台添加cookie
+			setcookie('code',$success['name'],time()+60*60*24,'/');
 			break;
 		}
 	}
 	if (!$ls) {
 		$success['code']=1;
+		$success['codeCookie']=1;
 	}
 	echo json_encode($success);
 
+
+	// echo urlencode('赵鹏');
+	// echo urldecode('%E8%B5%B5%E9%B9%8F');
+	
 ?>
