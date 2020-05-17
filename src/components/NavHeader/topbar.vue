@@ -37,10 +37,11 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/style/scss/base.scss';
 @import '@/assets/style/scss/mixin.scss';
+@import '@/assets/style/scss/config.scss';
   .nav-topbar {
-    height: 40px;
-    line-height: 40px;
-    background: #333;
+    height: $fontL;
+    line-height: $fontL;
+    background: $colorB;
     color: #b0b0b0;
     .container{
       @include flex();
@@ -51,16 +52,16 @@ export default {
         margin-left: 8px;
       }
       .my-cart{
-        height: 40px;
+        height: $fontL;
         width: 110px;
         text-align: center;
         background: #424242;
         .icon-cart{
-          font-size: 16px;
+          font-size: $fontI;
         }
         &:hover{
-          color: #ff6700;
-          background: #fff;
+          color: $colorA;
+          background: $colorL;
         }
       }
     }

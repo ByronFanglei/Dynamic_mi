@@ -7,7 +7,64 @@
       <div class="header-menu">
         <div class="item-menu">
           <span>小米手机</span>
-          <div class="children"></div>
+          <div class="children">
+            <ul>
+              <li class="product">
+                <a href="#" target="_blank">
+                  <div class="pro-img">
+                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                  </div>
+                  <div class="pro-name">小米10</div>
+                  <div class="pro-price">2099</div>
+                </a>
+              </li>
+              <li class="product">
+                <a href="#" target="_blank">
+                  <div class="pro-img">
+                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                  </div>
+                  <div class="pro-name">小米10</div>
+                  <div class="pro-price">2099</div>
+                </a>
+              </li>
+              <li class="product">
+                <a href="#" target="_blank">
+                  <div class="pro-img">
+                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                  </div>
+                  <div class="pro-name">小米10</div>
+                  <div class="pro-price">2099</div>
+                </a>
+              </li>
+              <li class="product">
+                <a href="#" target="_blank">
+                  <div class="pro-img">
+                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                  </div>
+                  <div class="pro-name">小米10</div>
+                  <div class="pro-price">2099</div>
+                </a>
+              </li>
+              <li class="product">
+                <a href="#" target="_blank">
+                  <div class="pro-img">
+                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                  </div>
+                  <div class="pro-name">小米10</div>
+                  <div class="pro-price">2099</div>
+                </a>
+              </li>
+              <li class="product">
+                <a href="#" target="_blank">
+                  <div class="pro-img">
+                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                  </div>
+                  <div class="pro-name">小米10</div>
+                  <div class="pro-price">2099</div>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="item-menu">
           <span>Redmi 红米</span>
@@ -39,8 +96,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/style/scss/base.scss';
 @import '@/assets/style/scss/mixin.scss';
+@import '@/assets/style/scss/config.scss';
   .nav-header{
     .container{
+      position: relative;
       height: 112px;
       @include flex();
       .header-login{
@@ -81,12 +140,74 @@ export default {
         padding-left: 209px;
         .item-menu{
           display: inline-block;
-          color: #333;
-          font-size: 16px;
+          color: $colorB;
+          font-size: $fontI;
           line-height: 112px;
-          margin-right: 20px;
+          margin-right: $fontG;
           span{
             cursor: pointer;
+          }
+          &:hover{
+            color: $colorA;
+            .children{
+              height: 230px;
+              opacity: 1;
+              transition: all .5s;
+            }
+          }
+          .children{
+            position: absolute;
+            top: 112px;
+            left: 0;
+            width: 1226px;
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-bottom: 1px solid $colorH;
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.11);
+            z-index: 10;
+            transition: all .5s;
+            .product{
+              position: relative;
+              float: left;
+              width: 16.5%;
+              height: 200px;
+              margin: 35px 0 0;
+              font-size: 12px;
+              line-height: 12px;
+              text-align: center;
+              &:before{
+                content: '';
+                position: absolute;
+                top: 28px;
+                right: 0;
+                border: .5px solid $colorC;
+                height: 100px;
+              }
+              &:last-child::before{
+                display: none;
+              }
+              a{
+                display: inline-block;
+                margin-top: 10px;
+                .pro-img{
+                  width: 160px;
+                  margin-bottom: 16px;
+                  img{
+                    width: 100%;
+                    height: auto;
+                  }
+                }
+                .pro-name{
+                  color: $colorB;
+                  font-weight: bold;
+                  margin-bottom: 8px;
+                }
+                .pro-price{
+                  color: $colorA;
+                }
+              }
+            }
           }
         }
       }
@@ -102,14 +223,14 @@ export default {
             width: 245px;
             height: 50px;
             border-right: 1px solid #e0e0e0;
-            padding: 0 14px;
+            padding: 0 $fontJ;
           }
           .wrapper-icon{
             width: 52px;
             text-align: center;
             span{
-              font-size: 24px;
-              color: #333;
+              font-size: $fontE;
+              color: $colorB;
             }
           }
         }

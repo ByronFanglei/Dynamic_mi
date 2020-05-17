@@ -1,5 +1,5 @@
 <template>
-  <div>fotter</div>
+  <div></div>
 </template>
 
 <script>
