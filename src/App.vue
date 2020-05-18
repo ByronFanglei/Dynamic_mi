@@ -5,12 +5,8 @@
 </template>
 
 <script>
-import storage from './storage'
 export default {
-  mounted () {
-    // storage.setItem('qqq', { qq: 1 }, 'abc')
-    storage.clear('qq', 'qqq')
-  }
+  name: 'app'
 }
 </script>
 

@@ -9,58 +9,13 @@
           <span>小米手机</span>
           <div class="children">
             <ul>
-              <li class="product">
-                <a href="#" target="_blank">
+              <li class="product" v-for="item in PhoneList" :key="item.id">
+                <a :href="`/product/${item.id}`" target="_blank">
                   <div class="pro-img">
-                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
+                    <img :src="item.mainImage" :alt="item.name">
                   </div>
-                  <div class="pro-name">小米10</div>
-                  <div class="pro-price">2099</div>
-                </a>
-              </li>
-              <li class="product">
-                <a href="#" target="_blank">
-                  <div class="pro-img">
-                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
-                  </div>
-                  <div class="pro-name">小米10</div>
-                  <div class="pro-price">2099</div>
-                </a>
-              </li>
-              <li class="product">
-                <a href="#" target="_blank">
-                  <div class="pro-img">
-                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
-                  </div>
-                  <div class="pro-name">小米10</div>
-                  <div class="pro-price">2099</div>
-                </a>
-              </li>
-              <li class="product">
-                <a href="#" target="_blank">
-                  <div class="pro-img">
-                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
-                  </div>
-                  <div class="pro-name">小米10</div>
-                  <div class="pro-price">2099</div>
-                </a>
-              </li>
-              <li class="product">
-                <a href="#" target="_blank">
-                  <div class="pro-img">
-                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
-                  </div>
-                  <div class="pro-name">小米10</div>
-                  <div class="pro-price">2099</div>
-                </a>
-              </li>
-              <li class="product">
-                <a href="#" target="_blank">
-                  <div class="pro-img">
-                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3bf20f1df3f2e22c5b29ff07634f3c59.png?thumb=1&w=160&h=110&f=webp&q=90" alt="">
-                  </div>
-                  <div class="pro-name">小米10</div>
-                  <div class="pro-price">2099</div>
+                  <div class="pro-name">{{item.name}}</div>
+                  <div class="pro-price">{{item.price | filter}}</div>
                 </a>
               </li>
             </ul>
@@ -89,7 +44,16 @@
 
 <script>
 export default {
-  name: 'headerbar'
+  name: 'headerbar',
+  props: {
+    PhoneList: Array
+  },
+  filters: {
+    filter (value) {
+      if (!value) return '0.00'
+      return '￥' + value.toFixed(2) + '元'
+    }
+  }
 }
 </script>
 
