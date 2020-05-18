@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: 'headerbar',
+  name: 'header-bar',
   props: {
     PhoneList: Array
   },
@@ -131,6 +131,7 @@ export default {
             box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.11);
             z-index: 10;
             transition: all .5s;
+            background: #fff;
             .product{
               position: relative;
               float: left;

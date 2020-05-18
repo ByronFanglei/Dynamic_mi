@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import OrderHeader from '../../components/OrderHeader'
-import NavFotter from '../../components/NavFotter'
+import OrderHeader from '../../components/OrderHeader/OrderHeader'
+import NavFotter from '../../components/NavFotter/NavFotter'
 export default {
   name: 'order',
   components: {

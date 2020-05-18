@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import TopBar from './NavHeader/topbar'
-import HeaderBar from './NavHeader/headerbar'
+import TopBar from './components/topbar'
+import HeaderBar from './components/headerbar'
 export default {
   name: 'nav-header',
   data () {

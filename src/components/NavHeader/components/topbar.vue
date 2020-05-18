@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'topbar',
+  name: 'top-bar',
   props: {
     username: String
   },

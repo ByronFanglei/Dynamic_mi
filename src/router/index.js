@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/home'
-import Index from '../views/index'
-import Detail from '../views/detail'
-import Product from '../views/product'
-import Cart from '../views/cart'
+import Index from '../views/Index/index'
+import Detail from '../views/Detail/detail'
+import Product from '../views/Product/product'
+import Cart from '../views/Cart/cart'
 import Order from '../views/Order/order'
 import OrderList from '../views/Order/components/orderList'
 import OrderPay from '../views/Order/components/orderPay'
 import OrderConfirm from '../views/Order/components/orderConfirm'
 import Alipay from '../views/Order/components/alipay'
-import NotFount from '../views/notfount'
+import NotFount from '../views/NotFont/notfount'
 
 Vue.use(VueRouter)
 
