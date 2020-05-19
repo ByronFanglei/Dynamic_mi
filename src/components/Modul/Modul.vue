@@ -4,14 +4,16 @@
     <div class="modul-dialog">
       <div class="modul-header">
         <span>标题</span>
-        <a href="javascript:;" class="icon-close"></a>
+        <a href="javascript:;" class="iconfont">&#xe639;</a>
       </div>
       <div class="modul-body">
         <slot name="home"></slot>
       </div>
       <div class="modul-fotter">
-        <a href="javascript:;" class="btn">确定</a>
-        <a href="javascript:;" class="btn">取消</a>
+        <div class="btn-group">
+          <a href="javascript:;" class="btn">确定</a>
+          <a href="javascript:;" class="btn">取消</a>
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +48,7 @@ export default {
 <style lang="scss" scope>
 @import '@/assets/style/scss/mixin.scss';
 @import '@/assets/style/scss/config.scss';
+@import '@/assets/style/scss/button.scss';
 .modul{
   @include position(fixed);
   .mask{
@@ -57,7 +60,31 @@ export default {
     @include position(absolute,40%,50%,660px,auto);
     background: crimson;
     transform: translate(-50%, -50%);
-
+    .modul-header{
+      display: flex;
+      justify-content: space-between;
+      height: 60px;
+      line-height: 60px;
+      background: $colorJ;
+      padding: 0 25px;
+      font-size: $fontI;
+      .iconfont{
+        transition: transform .3s;
+        &:hover{
+          transform: scale(1.5);
+        }
+      }
+    }
+    .modul-body{
+      padding: 42px 40px 54px;
+      font-size: $fontJ;
+    }
+    .modul-fotter{
+      height: 82px;
+      line-height: 82px;
+      text-align: center;
+      background: $colorJ;
+    }
   }
 }
 </style>
