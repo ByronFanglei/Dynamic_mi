@@ -8,3 +8,10 @@
   margin-left: auto;
   margin-right: auto;
 }
+@mixin position($pos:absolute,$top:0,$left:0,$w:100%,$h:100%){
+  position:$pos;
+  top:$top;
+  left:$left;
+  width:$w;
+  height:$h;
+}
