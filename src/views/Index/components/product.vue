@@ -10,14 +10,14 @@
       <div class="item-right">
         <div class="item" v-for="item of phoneList" :key="item.id">
           <div class="item-img">
-            <img :src="item.mainImage" alt="">
+            <img v-lazy="item.mainImage" alt="">
           </div>
           <div class="item-info">
             <p class="title">{{item.name}}</p>
             <p class="desc">{{item.subtitle}}</p>
             <p class="price">
               {{item.price | filter}}
-              <span class="iconfont">&#xe63f;</span>
+              <span class="iconfont" @click="addCart(item.id)">&#xe63f;</span>
             </p>
           </div>
         </div>
@@ -40,6 +40,19 @@ export default {
     filter (value) {
       if (!value) return '0.00'
       return `${value}元`
+    }
+  },
+  methods: {
+    addCart (id) {
+      this.$emit('modul', true)
+      // this.axios.post('/carts', {
+      //   productId: id,
+      //   selected: true
+      // }).then(value => {
+      //   console.log(value)
+      // }).catch(reason => {
+      //   console.log(reason)
+      // })
     }
   }
 }

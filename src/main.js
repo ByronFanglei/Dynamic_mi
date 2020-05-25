@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueLazyLoad from 'vue-lazyload'
 import '@/assets/style/iconfont.css'
 
 // 设置接口代理的连接首部，当访问/api后走接口代理
@@ -26,6 +27,10 @@ axios.interceptors.response.use((response) => {
 })
 
 Vue.use(VueAxios, axios)
+// 设置懒加载
+Vue.use(VueLazyLoad, {
+  loading: 'imgs/loading-svg/loading-bubbles.svg'
+})
 Vue.config.productionTip = false
 
 new Vue({

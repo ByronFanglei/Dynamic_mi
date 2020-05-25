@@ -5,14 +5,20 @@
       <banner></banner>
     </div>
     <div class="last">
-      <product :phoneList='phoneList'></product>
+      <product
+        :phoneList='phoneList'
+        :showModul='showModul'
+        @modul='handMoudl($event)'
+      ></product>
     </div>
     <modul
       title='提示'
       sureText='查看购物车'
-      btnType='1'
+      btnType='2'
       modulType='middle'
-      :showModul="true"
+      :showModul='showModul'
+      @cart='gotoCart($event)'
+      @clear='handMoudl($event)'
     >
       <template slot="home">
         <p>商品添加成功</p>
@@ -36,7 +42,8 @@ export default {
   },
   data () {
     return {
-      phoneList: []
+      phoneList: [],
+      showModul: false
     }
   },
   mounted () {
@@ -53,6 +60,13 @@ export default {
         value.list = value.list.slice(6, 14)
         this.phoneList = value.list
       })
+    },
+    handMoudl (e) {
+      this.showModul = e
+    },
+    gotoCart (e) {
+      this.showModul = e
+      this.$router.push('/cart')
     }
   }
 }

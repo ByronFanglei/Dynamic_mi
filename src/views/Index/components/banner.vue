@@ -2,11 +2,11 @@
   <div class="banner">
     <div class="four-banner">
       <a :href="`/product/${item.id}`" v-for="item in bannerfour" :key="item.id">
-        <img :src="item.img" alt="">
+        <img v-lazy="item.img" alt="">
       </a>
     </div>
     <div class="big-banner">
-      <img src="/imgs/banner.jpg" alt="">
+      <img v-lazy="'/imgs/banner.jpg'" alt="">
     </div>
   </div>
 </template>

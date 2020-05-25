@@ -11,6 +11,7 @@ import OrderPay from '../views/Order/components/orderPay'
 import OrderConfirm from '../views/Order/components/orderConfirm'
 import Alipay from '../views/Order/components/alipay'
 import NotFount from '../views/NotFont/notfount'
+import Login from '../views/Login/login'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,10 @@ const routes = [
       name: 'alipay',
       component: Alipay
     }]
+  }, {
+    path: '/login',
+    name: 'login',
+    component: Login
   }, {
     path: '*',
     name: 'not-fount',
