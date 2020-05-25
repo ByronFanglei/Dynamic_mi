@@ -6,7 +6,29 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  mounted () {
+    if (this.$cookie.get('userId')) {
+      this.getUser()
+      this.getCartProduct()
+    }
+  },
+  methods: {
+    getUser () {
+      this.axios.get('/user').then(value => {
+        this.$store.dispatch('getUsername', value.username)
+      }).catch(reason => {
+        console.log(reason)
+      })
+    },
+    getCartProduct () {
+      this.axios.get('/carts/products/sum').then(value => {
+        console.log(value)
+      }).catch(reason => {
+        console.log(reason)
+      })
+    }
+  }
 }
 </script>
 

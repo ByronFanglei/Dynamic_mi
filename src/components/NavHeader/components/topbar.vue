@@ -16,7 +16,7 @@
         <a href="javascript:;">Select Location</a>
       </div>
       <div class="topbar-user">
-        <a href="javascript:;" v-if='username'>{{username}}</a><span>|</span>
+        <a href="javascript:;" v-if='username'>{{username}}</a>
         <a href="javascript:;" v-if='!username' @click="goLogin">登录</a>
         <a href="javascript:;" v-if='username'>我的订单</a><span>|</span>
         <a href="javascript:;">消息通知</a>

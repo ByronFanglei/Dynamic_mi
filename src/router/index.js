@@ -12,6 +12,7 @@ import OrderConfirm from '../views/Order/components/orderConfirm'
 import Alipay from '../views/Order/components/alipay'
 import NotFount from '../views/NotFont/notfount'
 import Login from '../views/Login/login'
+import Register from '../views/Register/register'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,10 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  }, {
+    path: '/register',
+    name: 'register',
+    component: Register
   }, {
     path: '*',
     name: 'not-fount',

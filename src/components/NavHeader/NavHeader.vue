@@ -8,11 +8,11 @@
 <script>
 import TopBar from './components/topbar'
 import HeaderBar from './components/headerbar'
+import { mapState } from 'vuex'
 export default {
   name: 'nav-header',
   data () {
     return {
-      username: 'byron',
       PhoneList: []
     }
   },
@@ -34,6 +34,9 @@ export default {
         this.PhoneList = value.list
       })
     }
+  },
+  computed: {
+    ...mapState(['username'])
   }
 }
 </script>

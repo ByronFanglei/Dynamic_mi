@@ -15,9 +15,9 @@
           <span class="txt code">扫码登录</span>
         </div>
         <div class="layoyt-inp">
-          <input type="text" name="" placeholder="邮箱/手机号码/小米ID">
-          <input type="password" name="">
-          <div class="btn-huge">登录</div>
+          <input type="text" name="" placeholder="邮箱/手机号码/小米ID" v-model="username">
+          <input type="password" name="" v-model="password">
+          <div class="btn-huge" @click="login">登录</div>
           <div class="other">
             <div class="info phone">手机短信登录/注册</div>
             <div class="info regist">
@@ -44,7 +44,30 @@
 
 <script>
 export default {
-  name: 'login'
+  name: 'login',
+  data () {
+    return {
+      username: '',
+      password: '',
+      userId: ''
+    }
+  },
+  methods: {
+    login () {
+      // 解构this获取值
+      const { username, password } = this
+      this.axios.post('/user/login', {
+        username,
+        password
+      }).then(value => {
+        this.$cookie.set('userId', value.id, { expires: '1M' })
+        this.$store.dispatch('getUsername', value.username)
+        this.$router.push('/index')
+      }).catch(reason => {
+        console.log(`reason: ${reason}`)
+      })
+    }
+  }
 }
 </script>
 
@@ -95,6 +118,7 @@ export default {
             margin-bottom: 14px;
           }
           .btn-huge{
+            cursor: pointer;
             margin: 10px auto 14px;
             text-align: center;
             background: $colorA;
