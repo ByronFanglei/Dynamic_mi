@@ -30,13 +30,12 @@ export default {
     },
     register () {
       const { username, password, email } = this
-      console.log(username, password, email)
       this.axios.post('/user/register', {
         username,
         password,
         email
       }).then(value => {
-        console.log(value)
+        this.$router.push('/login')
       }).catch(reason => {
         console.log(reason)
       })

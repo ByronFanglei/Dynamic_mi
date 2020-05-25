@@ -24,6 +24,7 @@ export default {
     getCartProduct () {
       this.axios.get('/carts/products/sum').then(value => {
         console.log(value)
+        this.$store.dispatch('getCartcount', value)
       }).catch(reason => {
         console.log(reason)
       })

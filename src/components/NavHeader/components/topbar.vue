@@ -17,12 +17,13 @@
       </div>
       <div class="topbar-user">
         <a href="javascript:;" v-if='username'>{{username}}</a>
-        <a href="javascript:;" v-if='!username' @click="goLogin">登录</a>
-        <a href="javascript:;" v-if='username'>我的订单</a><span>|</span>
+        <a href="javascript:;" v-if='!username' @click="goLogin">登录</a><span v-if='!username'>|</span>
+        <a href="javascript:;" v-if='username'>我的订单</a><span v-if='username'>|</span>
+        <a href="javascript:;" v-if='username' @click='outLogin'>退出</a><span v-if='username'>|</span>
         <a href="javascript:;">消息通知</a>
         <a href="javascript:;" class="my-cart" @click="goToCart">
           <span class="icon-cart iconfont">&#xe63f;</span>
-          购物车(0)
+          购物车({{cartCount}})
         </a>
       </div>
     </div>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'top-bar',
   props: {
@@ -41,7 +43,14 @@ export default {
     },
     goLogin () {
       this.$router.push('/login')
+    },
+    outLogin () {
+      this.$cookie.delete('userId')
+      this.$router.push('/login')
     }
+  },
+  computed: {
+    ...mapState(['cartCount'])
   }
 }
 </script>

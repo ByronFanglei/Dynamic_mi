@@ -21,7 +21,7 @@
           <div class="other">
             <div class="info phone">手机短信登录/注册</div>
             <div class="info regist">
-              <span class="registNow">立即注册</span>
+              <span class="registNow" @click="gotoRegister">立即注册</span>
               <span class="info-line"></span>
               <span class="password">忘记密码</span>
             </div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'login',
   data () {
@@ -61,12 +62,17 @@ export default {
         password
       }).then(value => {
         this.$cookie.set('userId', value.id, { expires: '1M' })
-        this.$store.dispatch('getUsername', value.username)
+        // this.$store.dispatch('getUsername', value.username)
+        this.getUsername(value.username)
         this.$router.push('/index')
       }).catch(reason => {
         console.log(`reason: ${reason}`)
       })
-    }
+    },
+    gotoRegister () {
+      this.$router.push('/register')
+    },
+    ...mapActions(['getUsername'])
   }
 }
 </script>
