@@ -1,7 +1,7 @@
 <template>
   <div class="product-bar">
     <div class="bar-left">
-      <span class="pro">小米10Pro</span>
+      <span class="pro">{{title}}</span>
       <span class="line"></span>
       <span class="cen">小米10</span>
     </div>
@@ -11,14 +11,23 @@
       <a href="javascript:;">F码通道</a><span class="line"></span>
       <a href="javascript:;">咨询客服</a><span class="line"></span>
       <a href="javascript:;">用户评价</a>
-      <div class="btn">立即购买</div>
+      <div class="btn" @click="buy">立即购买</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'product-bar'
+  name: 'product-bar',
+  props: {
+    title: String
+  },
+  methods: {
+    buy () {
+      const id = this.$route.params.id
+      this.$router.push(`/detail/${id}`)
+    }
+  }
 }
 </script>
 

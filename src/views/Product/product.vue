@@ -1,6 +1,9 @@
 <template>
   <div class="product">
-    <product-bar :class="{'is_fixed':isFixed}"></product-bar>
+    <product-bar
+      :class="{'is_fixed':isFixed}"
+      :title='title'
+    ></product-bar>
     <pro-swiper></pro-swiper>
     <pro-video></pro-video>
   </div>
@@ -14,7 +17,8 @@ export default {
   name: 'product',
   data () {
     return {
-      isFixed: false
+      isFixed: false,
+      title: ''
     }
   },
   components: {
@@ -24,6 +28,7 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.getProduct()
   },
   destroyed () {
     window.removeEventListener('scroll', this.onScroll, false)
@@ -33,6 +38,13 @@ export default {
       // 滚动兼容
       const tpScrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       this.isFixed = tpScrollTop > 200
+    },
+    getProduct () {
+      const id = this.$route.params.id
+      this.axios.get(`/products/${id}`).then(value => {
+        this.title = value.name
+        console.log(value)
+      })
     }
   }
 }
