@@ -2,10 +2,10 @@
   <div class="item-video">
     <div class="video-bg" @click="showSlide=true"></div>
     <div class="video-box">
-      <div class="overlay" v-if="showSlide"></div>
+      <div class="overlay" v-show="showSlide"></div>
       <div class="video" :class="{'slide':showSlide}">
         <span class="iconfont" @click="showSlide=false">&#xe639;</span>
-        <video src="/imgs/product/watch.mp4" muted autoplay controls poster="/imgs/product/gallery-1.png"></video>
+        <video src="/video/watch.mp4" muted autoplay controls poster="/imgs/product/gallery-1.png"></video>
       </div>
     </div>
   </div>
