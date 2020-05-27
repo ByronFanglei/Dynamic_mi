@@ -51,7 +51,8 @@ export default {
       }).then(value => {
         this.$store.dispatch('getCartcount', value.cartTotalQuantity)
       }).catch(reason => {
-        console.log(reason)
+        console.log(reason.status)
+        // this.$emit('status', reason.status)
       })
     }
   }

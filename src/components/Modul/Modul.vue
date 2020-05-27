@@ -5,7 +5,7 @@
       <div class="modul-dialog">
         <div class="modul-header">
           <span>{{title}}</span>
-          <a href="javascript:;" @click="clearModul()" class="iconfont">&#xe639;</a>
+          <a href="javascript:;" @click="clearModul()" class="iconfont">&#xe668;</a>
         </div>
         <div class="modul-body">
           <slot name="home"></slot>
@@ -87,7 +87,7 @@ export default {
   }
   .modul-dialog{
     @include position(absolute,40%,50%,660px,auto);
-    background: crimson;
+    background: $colorL;
     transform: translate(-50%, -50%);
     .modul-header{
       display: flex;

@@ -6,6 +6,48 @@
   "description": "小米商场",
   "glyphs": [
     {
+      "icon_id": "6275357",
+      "name": "减号",
+      "font_class": "icon-test1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "7677916",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "903784",
+      "name": "方框选择",
+      "font_class": "fangkuangxuanze",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "4425820",
+      "name": "选择-方框-填充",
+      "font_class": "xuanze-fangkuang-tianchong",
+      "unicode": "e793",
+      "unicode_decimal": 59283
+    },
+    {
+      "icon_id": "6129116",
+      "name": "79勾选-未选中-线性方框",
+      "font_class": "gouxuan-weixuanzhong-xianxingfangkuang",
+      "unicode": "e77b",
+      "unicode_decimal": 59259
+    },
+    {
+      "icon_id": "6536737",
+      "name": "叉号",
+      "font_class": "chahao",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
       "icon_id": "56998",
       "name": "天猫-七天退货",
       "font_class": "tianmaoqitiantuihuo",

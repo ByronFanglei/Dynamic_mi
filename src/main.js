@@ -6,6 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
+import moment from 'moment'
 import '@/assets/style/iconfont.css'
 
 // 设置接口代理的连接首部，当访问/api后走接口代理
@@ -27,6 +28,8 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(res)
   }
 })
+// 设置时间地址
+moment.locale('zh-cn')
 // 设置vuecookie
 Vue.use(VueCookie)
 // 将axios挂载到this中

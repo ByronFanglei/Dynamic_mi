@@ -21,6 +21,8 @@
       @clear='handMoudl($event)'
     >
       <template slot="home">
+        <!-- <p v-if="status === 0">商品添加成功</p>
+        <p v-if="status === 2">商品添加成功</p> -->
         <p>商品添加成功</p>
       </template>
     </modul>
@@ -44,6 +46,8 @@ export default {
     return {
       phoneList: [],
       showModul: false
+      // 库存状态 0有货 2没货
+      // status: 0
     }
   },
   mounted () {
