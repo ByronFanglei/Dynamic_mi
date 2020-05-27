@@ -45,14 +45,14 @@ export default {
   methods: {
     addCart (id) {
       this.$emit('modul', true)
-      // this.axios.post('/carts', {
-      //   productId: id,
-      //   selected: true
-      // }).then(value => {
-      //   console.log(value)
-      // }).catch(reason => {
-      //   console.log(reason)
-      // })
+      this.axios.post('/carts', {
+        productId: id,
+        selected: true
+      }).then(value => {
+        this.$store.dispatch('getCartcount', value.cartTotalQuantity)
+      }).catch(reason => {
+        console.log(reason)
+      })
     }
   }
 }

@@ -8,3 +8,13 @@
   height: 12px;
   margin: 0 1rem;
 }
+.clearfix:before,.clearfix:after{
+  content: ' ';
+  display: table;
+}
+.clearfix:after{
+  clear: both;
+}
+.selected{
+  border: 1px solid #ff6700 !important;
+}

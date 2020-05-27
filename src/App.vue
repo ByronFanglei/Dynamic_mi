@@ -23,7 +23,7 @@ export default {
     },
     getCartProduct () {
       this.axios.get('/carts/products/sum').then((value = 0) => {
-        console.log(value)
+        // console.log(value)
         this.$store.dispatch('getCartcount', value)
       }).catch(reason => {
         console.log(reason)
