@@ -1,12 +1,12 @@
 <template>
   <div>
     <order-header title='我的购物车'></order-header>
-    <div class="wrapper">
+    <div class="wrapper" v-if="list.length > 0">
       <div class="container">
         <div class="cart-box">
           <ul class="cart-item-head">
             <li class="col-1">
-            <span class="iconfont" :class="{'choose': allChecked}" @click="allChoose" ref="icon">&#xe77b;</span>全选</li>
+            <span class="allchoose" :class="{'choose': allChecked}" @click="allChoose" ref="icon"></span>全选</li>
             <li class="col-1"></li>
             <li class="col-2">商品名称</li>
             <li class="col-1">单价</li>
@@ -16,23 +16,25 @@
           </ul>
           <ul class="cart-item-list">
             <li class="cart-item" v-for="item in list" :key="item.productId">
-              <div class="itemchoose"><span class="iconfont" @click="Choose($event)">&#xe77b;</span></div>
+              <div class="itemchoose">
+                <span :class="{'chooseRadio':item.productSelected,'notChose':!item.productSelected}" @click="numProduct(item, '1')"></span>
+              </div>
               <div class="proimg">
                 <img :src="item.productMainImage" alt="">
               </div>
               <div class="name">{{item.productName}}</div>
               <div class="price">{{item.productPrice | completePrice}}</div>
               <div class="number">
-                <a href="javascript:;">
-                  <span class="iconfont">&#xe612;</span>
-                </a>
-                <input type="text" name="" :value="item.quantity">
-                <a href="javascript:;">
+                <a href="javascript:;" @click="numProduct(item, '+')">
                   <span class="iconfont">&#xe63e;</span>
+                </a>
+                <input type="text" name="" :value="item.quantity" disabled>
+                <a href="javascript:;" @click="numProduct(item, '-')">
+                  <span class="iconfont">&#xe612;</span>
                 </a>
               </div>
               <div class="subtotal">{{item.productTotalPrice | completePrice}}</div>
-              <div class="itemdel"><span class="iconfont">&#xe668;</span></div>
+              <div class="itemdel" @click="delPro(item)"><span class="iconfont">&#xe668;</span></div>
             </li>
           </ul>
         </div>
@@ -49,6 +51,22 @@
         </div>
       </div>
     </div>
+    <div v-if="list.length == 0">
+      购物车没东西
+    </div>
+    <modul
+      title='提示'
+      sureText='确定'
+      btnType='2'
+      modulType='middle'
+      :showModul='showModul'
+      @cart='realDelPro()'
+      @clear='handMoudl($event)'
+    >
+      <template slot="home">
+        <p>确认要删除吗？</p>
+      </template>
+    </modul>
     <nav-fotter></nav-fotter>
   </div>
 </template>
@@ -56,18 +74,24 @@
 <script>
 import OrderHeader from '../../components/OrderHeader/OrderHeader'
 import NavFotter from '../../components/NavFotter/NavFotter'
+import Modul from '../../components/Modul/Modul'
 export default {
   name: 'cart',
   components: {
     OrderHeader,
-    NavFotter
+    NavFotter,
+    Modul
   },
+  // 调用app组件方法
+  inject: ['reload'],
   data () {
     return {
       list: [], // 商品列表
       allChecked: false, // 是否全选
       cartTotalPrice: 0, // 商品总金额
-      checkedNum: 0 // 选中商品数量
+      checkedNum: 0, // 选中商品数量
+      delproduct: {}, // 当前需要删除的商品
+      showModul: false
     }
   },
   mounted () {
@@ -75,29 +99,97 @@ export default {
   },
   methods: {
     allChoose () {
+      const url = this.allChecked ? '/carts/unSelectAll' : '/carts/selectAll'
+      this.axios.put(url).then(value => {
+        this.randerData(value)
+      }).catch(reason => {
+        console.log(reason)
+      })
       if (this.allChecked) {
-        this.$refs.icon.innerHTML = '&#xe77b;'
+        // this.$refs.icon.innerHTML = '&#xe77b;'
         this.allChecked = false
       } else {
-        this.$refs.icon.innerHTML = '&#xe793;'
+        // this.$refs.icon.innerHTML = '&#xe793;'
         this.allChecked = true
       }
     },
     getCartList () {
       this.axios.get('/carts').then(value => {
-        this.list = value.cartProductVoList || []
-        this.allChecked = value.selectedAll
-        this.cartTotalPrice = value.cartTotalPrice
-        this.checkedNum = this.list.filter(item => item.productSelected)
-        // console.log(value)
-        // console.log(this.checkedNum)
-        // console.log(this.list)
+        this.randerData(value)
       }).catch(reason => {
         console.log(reason)
       })
     },
-    Choose (e) {
-      console.log(e.currentTarget)
+    // 选择购买商品
+    // Choose (item, $event) {
+    //   // const selected = item.selected
+    //   this.axios.put(`/carts/${item.productId}`, {
+    //     quantity: item.quantity,
+    //     selected: true
+    //   }).then(value => {
+    //     item.productSelected = value.productSelected
+    //     this.allChecked = value.selectedAll
+    //     if (this.allChecked) {
+    //       this.randerData(value)
+    //     }
+    //     // 刷新页面
+    //     this.reload()
+    //   }).catch(reason => {
+    //     console.log(reason)
+    //   })
+    // },
+    randerData (res) {
+      this.list = res.cartProductVoList || []
+      this.allChecked = res.selectedAll
+      this.cartTotalPrice = res.cartTotalPrice
+      this.checkedNum = this.list.filter(item => item.productSelected)
+    },
+    // 商品添加
+    numProduct (item, type) {
+      let quantity = item.quantity
+      let selected = item.productSelected
+      if (type === '+') {
+        if (quantity === 1) {
+          alert('商品不能少于一件呦！')
+          return
+        }
+        --quantity
+      } else if (type === '-') {
+        if (quantity > item.productStock) {
+          alert('存货不足啦！')
+          return
+        }
+        ++quantity
+      } else {
+        selected = !item.productSelected
+      }
+      this.axios.put(`/carts/${item.productId}`, {
+        quantity,
+        selected
+      }).then(value => {
+        this.randerData(value)
+      }).catch(reason => {
+        console.log(reason)
+      })
+    },
+    // 删除产品
+    delPro (item) {
+      this.showModul = true
+      this.delproduct = item
+    },
+    realDelPro () {
+      this.showModul = false
+      const productId = this.delproduct.productId
+      this.axios.delete(`/carts/${productId}`, {
+        productId
+      }).then(value => {
+        this.randerData(value)
+      }).catch(reason => {
+        console.log(reason)
+      })
+    },
+    handMoudl (e) {
+      this.showModul = e
     }
   },
   filters: {
@@ -135,6 +227,14 @@ export default {
           }
           .col-1{
             flex: 1;
+            .allchoose{
+              display: inline-block;
+              width: 20px;
+              height: 20px;
+              border: 1px solid #ccc;
+              vertical-align: middle;
+              margin-right: 5px;
+            }
           }
           .col-2{
             flex: 2;
@@ -256,5 +356,19 @@ export default {
   }
   .choose{
     color: $colorA;
+    background: $colorA;
+    /* display: inline !important; */
+  }
+  .notChose{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px dotted $colorA;
+  }
+  .chooseRadio{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: $colorA;
   }
 </style>
