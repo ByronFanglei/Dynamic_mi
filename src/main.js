@@ -7,7 +7,9 @@ import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
 import moment from 'moment'
+import { Message } from 'element-ui'
 import '@/assets/style/iconfont.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 // 设置接口代理的连接首部，当访问/api后走接口代理
 axios.defaults.baseURL = '/api'
@@ -24,7 +26,7 @@ axios.interceptors.response.use((response) => {
     window.location.href = '/login'
   } else {
     // 返回错误信息
-    alert(res.msg)
+    Message.error(res.msg)
     return Promise.reject(res)
   }
 })
@@ -38,8 +40,9 @@ Vue.use(VueAxios, axios)
 Vue.use(VueLazyLoad, {
   loading: 'imgs/loading-svg/loading-bubbles.svg'
 })
+// 将message挂载到原型，可以直接用this调用
+Vue.prototype.$message = Message
 Vue.config.productionTip = false
-
 new Vue({
   router,
   store,

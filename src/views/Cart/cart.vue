@@ -46,14 +46,12 @@
           </div>
           <div class="bar-right">
             <div href="javascript:;">合计：<span>{{cartTotalPrice}}</span>元</div>
-            <div class="btn-huge" :class="{'hightLight': this.cartTotalPrice != 0}">去支付</div>
+            <div class="btn-huge" :class="{'hightLight': this.cartTotalPrice != 0}" @click="orderPay">去支付</div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="list.length == 0">
-      购物车没东西
-    </div>
+    <not-product v-if="list.length == 0"></not-product>
     <modul
       title='提示'
       sureText='确定'
@@ -75,12 +73,14 @@
 import OrderHeader from '../../components/OrderHeader/OrderHeader'
 import NavFotter from '../../components/NavFotter/NavFotter'
 import Modul from '../../components/Modul/Modul'
+import NotProduct from './components/notproduct'
 export default {
   name: 'cart',
   components: {
     OrderHeader,
     NavFotter,
-    Modul
+    Modul,
+    NotProduct
   },
   // 调用app组件方法
   inject: ['reload'],
@@ -120,24 +120,6 @@ export default {
         console.log(reason)
       })
     },
-    // 选择购买商品
-    // Choose (item, $event) {
-    //   // const selected = item.selected
-    //   this.axios.put(`/carts/${item.productId}`, {
-    //     quantity: item.quantity,
-    //     selected: true
-    //   }).then(value => {
-    //     item.productSelected = value.productSelected
-    //     this.allChecked = value.selectedAll
-    //     if (this.allChecked) {
-    //       this.randerData(value)
-    //     }
-    //     // 刷新页面
-    //     this.reload()
-    //   }).catch(reason => {
-    //     console.log(reason)
-    //   })
-    // },
     randerData (res) {
       this.list = res.cartProductVoList || []
       this.allChecked = res.selectedAll
@@ -150,13 +132,13 @@ export default {
       let selected = item.productSelected
       if (type === '+') {
         if (quantity === 1) {
-          alert('商品不能少于一件呦！')
+          this.$message.warning('商品不能少于一件呦！')
           return
         }
         --quantity
       } else if (type === '-') {
         if (quantity > item.productStock) {
-          alert('存货不足啦！')
+          this.$message.warning('存货不足啦！')
           return
         }
         ++quantity
@@ -187,9 +169,20 @@ export default {
       }).catch(reason => {
         console.log(reason)
       })
+      this.$message.success('删除成功！！！')
     },
     handMoudl (e) {
       this.showModul = e
+      this.$message.warning('呦呵！你好皮哇！！！')
+    },
+    // 支付跳转
+    orderPay () {
+      const isCheck = this.list.every(item => !item.productSelected)
+      if (isCheck) {
+        this.$message.warning('不买东西，咋给你算钱哇！！！！！')
+      } else {
+        this.$router.push('/order/confirm')
+      }
     }
   },
   filters: {

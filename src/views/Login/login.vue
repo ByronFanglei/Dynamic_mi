@@ -61,10 +61,16 @@ export default {
         username,
         password
       }).then(value => {
-        this.$cookie.set('userId', value.id, { expires: '1M' })
+        this.$message.success('欢迎！')
+        this.$cookie.set('userId', value.id, { expires: 'Session' })
         // this.$store.dispatch('getUsername', value.username)
         this.getUsername(value.username)
-        this.$router.push('/index')
+        this.$router.push({
+          name: 'index',
+          params: {
+            from: 'login'
+          }
+        })
       }).catch(reason => {
         console.log(`reason: ${reason}`)
       })

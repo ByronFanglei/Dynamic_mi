@@ -1,22 +1,12 @@
 <template>
   <div id="app">
-    <router-view v-if="isRouterCiew"/>
+      <router-view />
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
-  provide () {
-    return {
-      reload: this.reload
-    }
-  },
-  data () {
-    return {
-      isRouterCiew: true
-    }
-  },
   mounted () {
     if (this.$cookie.get('userId')) {
       this.getUser()
@@ -24,13 +14,6 @@ export default {
     }
   },
   methods: {
-    reload () {
-      this.isRouterCiew = false
-      // DOM更新后后执行$nextTick
-      this.$nextTick(() => {
-        this.isRouterCiew = true
-      })
-    },
     getUser () {
       this.axios.get('/user').then((value = {}) => {
         this.$store.dispatch('getUsername', value.username)
@@ -40,7 +23,6 @@ export default {
     },
     getCartProduct () {
       this.axios.get('/carts/products/sum').then((value = 0) => {
-        // console.log(value)
         this.$store.dispatch('getCartcount', value)
       }).catch(reason => {
         console.log(reason)

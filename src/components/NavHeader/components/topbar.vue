@@ -31,11 +31,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'top-bar',
   props: {
     username: String
+  },
+  mounted () {
+    const params = this.$route.params
+    if (params && params.from === 'login') {
+      this.getCartProduct()
+    }
   },
   methods: {
     goToCart () {
@@ -44,10 +50,26 @@ export default {
     goLogin () {
       this.$router.push('/login')
     },
+    getCartProduct () {
+      this.axios.get('/carts/products/sum').then((value = 0) => {
+        this.$store.dispatch('getCartcount', value)
+      }).catch(reason => {
+        console.log(reason)
+      })
+    },
     outLogin () {
-      this.$cookie.delete('userId')
-      this.$router.push('/login')
-    }
+      console.log('1')
+      this.axios.post('/user/logout').then(value => {
+        this.$message.success('退出成功！')
+        this.$cookie.set('userId', '', { expires: -1 })
+        this.getUsername('')
+        this.getCartcount('0')
+      }).catch(reason => {
+        this.$message.error('网络繁忙！请重试')
+        console.log(reason)
+      })
+    },
+    ...mapActions(['getUsername', 'getCartcount'])
   },
   computed: {
     ...mapState(['cartCount'])

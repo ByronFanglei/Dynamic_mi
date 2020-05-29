@@ -105,11 +105,12 @@ export default {
           this.$store.dispatch('getCartcount', value.cartTotalQuantity)
           this.$router.push('/cart')
         }).catch(reason => {
-          console.log(reason)
+          console.log(`reason:${reason}`)
         })
       } else {
         this.$router.push('/login')
       }
+      // this.$message.success('添加成功！！！')
     }
   }
 }
