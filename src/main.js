@@ -10,12 +10,13 @@ import moment from 'moment'
 import { Message } from 'element-ui'
 import '@/assets/style/iconfont.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import '@/assets/style/scss/element-variables.scss'
 
 // 设置接口代理的连接首部，当访问/api后走接口代理
 axios.defaults.baseURL = '/api'
 // 设置超时时间
 axios.defaults.timeout = 8000
-// 接口错误拦截
+// 接口错误拦截 任何接口都会拦截
 axios.interceptors.response.use((response) => {
   const res = response.data
   if (res.status === 0) {
@@ -29,6 +30,10 @@ axios.interceptors.response.use((response) => {
     Message.error(res.msg)
     return Promise.reject(res)
   }
+}, (error) => {
+  const res = error.response
+  Message.error(res.data.message)
+  return Promise.reject(error)
 })
 // 设置时间地址
 moment.locale('zh-cn')

@@ -6,6 +6,9 @@
           <a href="/index"></a>
         </div>
         <div class="mycart">{{title}}</div>
+        <div class="mes">
+          <slot name="mes"></slot>
+        </div>
       </div>
       <div class="conright" v-if="!username">
         <a href="/login">登录</a>
@@ -67,6 +70,15 @@ export default {
           display: inline-block;
           font-size: $fontC;
           color: $colorB;
+          margin-right: 20px;
+          vertical-align: middle;
+        }
+        .mes{
+          display: inline-block;
+          span{
+            vertical-align: sub;
+            color: #757575;
+          }
         }
       }
       .conright{

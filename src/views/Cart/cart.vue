@@ -1,6 +1,10 @@
 <template>
   <div>
-    <order-header title='我的购物车'></order-header>
+    <order-header title='我的购物车'>
+      <template v-slot:mes>
+        <span>温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span>
+      </template>
+    </order-header>
     <div class="wrapper" v-if="list.length > 0">
       <div class="container">
         <div class="cart-box">
@@ -82,8 +86,6 @@ export default {
     Modul,
     NotProduct
   },
-  // 调用app组件方法
-  inject: ['reload'],
   data () {
     return {
       list: [], // 商品列表

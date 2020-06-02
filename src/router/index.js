@@ -43,6 +43,7 @@ const routes = [
     path: '/order',
     name: 'order',
     component: Order,
+    redirect: '/order/confirm',
     children: [{
       path: 'list',
       name: 'order-list',

@@ -18,3 +18,9 @@
 .selected{
   border: 1px solid #ff6700 !important;
 }
+.changecolor{
+  cursor: pointer !important;
+  &:hover{
+    color: #ff6700;
+  }
+}

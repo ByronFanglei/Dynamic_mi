@@ -17,7 +17,7 @@
         <div class="layoyt-inp">
           <input type="text" name="" placeholder="邮箱/手机号码/小米ID" v-model="username">
           <input type="password" name="" v-model="password">
-          <div class="btn-huge" @click="login">登录</div>
+          <div class="btn-huge" @click="login" @keyup.enter="login">登录</div>
           <div class="other">
             <div class="info phone">手机短信登录/注册</div>
             <div class="info regist">
@@ -53,27 +53,42 @@ export default {
       userId: ''
     }
   },
+  created () {
+    // that = this
+    // 全局监听enter事件
+    document.onkeydown = () => {
+      const code = window.event.keyCode
+      if (code === 13) {
+        this.login()
+      }
+    }
+  },
   methods: {
     login () {
       // 解构this获取值
       const { username, password } = this
-      this.axios.post('/user/login', {
-        username,
-        password
-      }).then(value => {
-        this.$message.success('欢迎！')
-        this.$cookie.set('userId', value.id, { expires: 'Session' })
-        // this.$store.dispatch('getUsername', value.username)
-        this.getUsername(value.username)
-        this.$router.push({
-          name: 'index',
-          params: {
-            from: 'login'
-          }
+      if (username.trim().length !== 0 && password.trim().length !== 0) {
+        this.axios.post('/user/login', {
+          username,
+          password
+        }).then(value => {
+          this.$message.success('欢迎！')
+          this.$cookie.set('userId', value.id, { expires: 'Session' })
+          // this.$store.dispatch('getUsername', value.username)
+          this.getUsername(value.username)
+          this.$router.push({
+            name: 'index',
+            params: {
+              from: 'login'
+            }
+          })
+        }).catch(reason => {
+          this.$message.error('老哥！估计是密码有问题把！')
+          console.log(`reason: ${reason}`)
         })
-      }).catch(reason => {
-        console.log(`reason: ${reason}`)
-      })
+      } else {
+        this.$message.error('你账号或者密码不输，咋往进登了！！！')
+      }
     },
     gotoRegister () {
       this.$router.push('/register')

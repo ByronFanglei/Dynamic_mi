@@ -8,7 +8,9 @@ export default new Vuex.Store({
     // 当前登录用户名
     username: '',
     // 购物车商品数量
-    cartCount: 0
+    cartCount: 0,
+    // 支付订单名称
+    payName: ''
   },
   mutations: {
     savaUsername (state, data) {
@@ -17,6 +19,9 @@ export default new Vuex.Store({
     },
     savaCartcount (state, value) {
       state.cartCount = value
+    },
+    savePayName (state, value) {
+      state.payName = value
     }
   },
   actions: {
@@ -26,6 +31,9 @@ export default new Vuex.Store({
     },
     getCartcount (state, value) {
       state.commit('savaCartcount', value)
+    },
+    getPayName (state, payname) {
+      state.commit('savePayName', payname)
     }
   },
   modules: {

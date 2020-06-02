@@ -18,7 +18,7 @@
       <div class="topbar-user">
         <a href="javascript:;" v-if='username'>{{username}}</a>
         <a href="javascript:;" v-if='!username' @click="goLogin">登录</a><span v-if='!username'>|</span>
-        <a href="javascript:;" v-if='username'>我的订单</a><span v-if='username'>|</span>
+        <a href="javascript:;" v-if='username' @click="gotoList">我的订单</a><span v-if='username'>|</span>
         <a href="javascript:;" v-if='username' @click='outLogin'>退出</a><span v-if='username'>|</span>
         <a href="javascript:;">消息通知</a>
         <a href="javascript:;" class="my-cart" @click="goToCart">
@@ -68,6 +68,9 @@ export default {
         this.$message.error('网络繁忙！请重试')
         console.log(reason)
       })
+    },
+    gotoList () {
+      this.$router.push('/order/list')
     },
     ...mapActions(['getUsername', 'getCartcount'])
   },
