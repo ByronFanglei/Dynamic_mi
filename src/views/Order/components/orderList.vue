@@ -26,7 +26,7 @@
         <ul>
           <li v-for="(item, index) in list" :key="index" :class="{'nopay': item.status!==20}">
             <div class="contop" :class="{'nopay nopaycontop': item.status!==20}">
-              <div class="delivery" :class="{'nopaycolor': item.status!==20}">{{item.statusDesc}}</div>
+              <div class="delivery" :class="{'nopaycolor': item.status!==20}">{{item.statusDesc}}{{index}}</div>
               <div class="time" v-if="item.status==20">预计6月3日送达</div>
               <div class="detail">
                 {{item.paymentTime ? item.paymentTime : '2020-5-1'}}
@@ -56,7 +56,7 @@
           </li>
         </ul>
       </div>
-      <el-pagination
+      <!-- <el-pagination
         class="pagestyle"
         background
         layout="prev, pager, next, jumper"
@@ -64,15 +64,23 @@
         :pageSize="pageSize"
         @current-change="handleChange"
       >
-      </el-pagination>
+      </el-pagination> -->
     </div>
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :distance="distance"
+    >
+      <div slot="spinner">小弟拼命加载中...</div>
+      <div slot="no-more">订单已加载完毕!</div>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
 import Loading from '../../../components/Loading/Loading'
 import NotData from '../../NotFont/notdata'
-import { Pagination } from 'element-ui'
+// import { Pagination } from 'element-ui'
+import InfiniteLoading from 'vue-infinite-loading'
 export default {
   name: 'order-list',
   data () {
@@ -81,13 +89,16 @@ export default {
       isLoading: false,
       total: 0,
       pageSize: 10,
-      pageNum: 1
+      pageNum: 1,
+      distance: 150,
+      hasNextPage: false // 是否有下一页
     }
   },
   components: {
     Loading,
     NotData,
-    [Pagination.name]: Pagination
+    // [Pagination.name]: Pagination,
+    InfiniteLoading
   },
   mounted () {
     this.getAllList()
@@ -115,6 +126,7 @@ export default {
         this.list = value.list
         this.total = value.total
         this.pageSize = value.pageSize
+        this.hasNextPage = value.hasNextPage
         this.isLoading = false
       })
     },
@@ -131,6 +143,29 @@ export default {
     handleChange (pageNum) {
       this.pageNum = pageNum
       this.getAllList()
+    },
+    // 滚动分页
+    infiniteHandler ($state) {
+      this.axios.get('/orders', {
+        params: {
+          pageSize: 10,
+          pageNum: this.pageNum
+        }
+      }).then(value => {
+        if (value.hasNextPage) {
+          this.pageNum++
+          this.list = this.list.concat(value.list)
+          this.total = value.total
+          this.isLoading = false
+          this.$message.warning('正在加载订单中')
+          $state.loaded()
+        } else {
+          this.$message.success('订单已全部加载完成！！！')
+          $state.complete()
+        }
+      }).catch(reason => {
+        console.log(reason)
+      })
     }
   }
 }
