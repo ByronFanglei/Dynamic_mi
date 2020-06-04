@@ -2,17 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/home'
 import Index from '../views/Index/index'
-import Detail from '../views/Detail/detail'
-import Product from '../views/Product/product'
-import Cart from '../views/Cart/cart'
-import Order from '../views/Order/order'
-import OrderList from '../views/Order/components/orderList'
-import OrderPay from '../views/Order/components/orderPay'
-import OrderConfirm from '../views/Order/components/orderConfirm'
-import Alipay from '../views/Order/components/alipay'
-import NotFount from '../views/NotFont/notfount'
-import Login from '../views/Login/login'
-import Register from '../views/Register/register'
+// import Detail from '../views/Detail/detail'
+// import Product from '../views/Product/product'
+// import Cart from '../views/Cart/cart'
+// import Order from '../views/Order/order'
+// import OrderList from '../views/Order/components/orderList'
+// import OrderPay from '../views/Order/components/orderPay'
+// import OrderConfirm from '../views/Order/components/orderConfirm'
+// import Alipay from '../views/Order/components/alipay'
+// import NotFount from '../views/NotFont/notfount'
+// import Login from '../views/Login/login'
+// import Register from '../views/Register/register'
 
 Vue.use(VueRouter)
 
@@ -29,50 +29,50 @@ const routes = [
     }, {
       path: '/detail/:id',
       name: 'detail',
-      component: Detail
+      component: () => import('../views/Detail/detail.vue')
     }, {
       path: '/product/:id',
       name: 'product',
-      component: Product
+      component: () => import('../views/Product/product.vue')
     }]
   }, {
     path: '/cart',
     name: 'cart',
-    component: Cart
+    component: () => import('../views/Cart/cart.vue')
   }, {
     path: '/order',
     name: 'order',
-    component: Order,
+    component: () => import('../views/Order/order.vue'),
     redirect: '/order/confirm',
     children: [{
       path: 'list',
       name: 'order-list',
-      component: OrderList
+      component: () => import('../views/Order/components/orderList.vue')
     }, {
       path: 'pay',
       name: 'order-pay',
-      component: OrderPay
+      component: () => import('../views/Order/components/orderPay.vue')
     }, {
       path: 'confirm',
       name: 'order-confirm',
-      component: OrderConfirm
+      component: () => import('../views/Order/components/orderConfirm.vue')
     }, {
       path: 'alipay',
       name: 'alipay',
-      component: Alipay
+      component: () => import('../views/Order/components/alipay.vue')
     }]
   }, {
     path: '/login',
     name: 'login',
-    component: Login
+    component: () => import('../views/Login/login.vue')
   }, {
     path: '/register',
     name: 'register',
-    component: Register
+    component: () => import('../views/Register/register.vue')
   }, {
     path: '*',
     name: 'not-fount',
-    component: NotFount
+    component: () => import('../views/NotFont/notfount.vue')
   }
 ]
 

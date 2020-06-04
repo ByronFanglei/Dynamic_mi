@@ -10,6 +10,20 @@ module.exports = {
           '/api': ''
         }
       }
+      // '/test': {
+      //   target: 'http://192.168.199.190:9001/',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '/test': ''
+      //   }
+      // }
     }
-  }
+  },
+  // 打包后不生成吗map文件
+  productionSourceMap: false,
+  // 真正的按需加载
+  chainWebpack: (config) => {
+    config.plugins.delete('prefetch')
+  },
+  assetsDir: './'
 }

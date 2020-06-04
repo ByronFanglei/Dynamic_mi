@@ -30,15 +30,16 @@ export default {
   data () {
     return {
       swiperOptions: {
-        autoplay: true,
-        loop: true,
-        effect: 'cube',
-        cubeEffect: {
-          slideShadows: true,
-          shadow: true,
-          shadowOffset: 100,
-          shadowScale: 0.6
+        autoplay: {
+          disableOnInteraction: false
         },
+        loop: true,
+        freeMode: false,
+        // effect: 'flip',
+        // flipEffect: {
+        //   slideShadows: true,
+        //   limitRotation: true
+        // },
         pagination: {
           el: '.swiper-pagination',
           clickable: true

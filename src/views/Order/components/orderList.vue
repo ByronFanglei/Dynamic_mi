@@ -26,7 +26,7 @@
         <ul>
           <li v-for="(item, index) in list" :key="index" :class="{'nopay': item.status!==20}">
             <div class="contop" :class="{'nopay nopaycontop': item.status!==20}">
-              <div class="delivery" :class="{'nopaycolor': item.status!==20}">{{item.statusDesc}}{{index}}</div>
+              <div class="delivery" :class="{'nopaycolor': item.status!==20}">{{item.statusDesc}}</div>
               <div class="time" v-if="item.status==20">预计6月3日送达</div>
               <div class="detail">
                 {{item.paymentTime ? item.paymentTime : '2020-5-1'}}
